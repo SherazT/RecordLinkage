@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import csv
+import recordlinkage
 import pdb #byebug for python --> pdb.set_trace()
 
 # with open('people.csv', newline='') as csvfile:
@@ -8,6 +8,19 @@ import pdb #byebug for python --> pdb.set_trace()
 # 	for row in file:
 # 		pdb.set_trace()		
 
-df = pd.read_csv('test.csv',escapechar='\\', encoding='utf-8')
+df = pd.read_csv('test.csv',escapechar='\\')
+
+df_1 = df[df.source == ' source_1']
+df_2 = df[df.source == ' source_2']
+df_3 = df[df.source == ' source_3']
+
+# index = recordlinkage.Index(df_1, df_2)
+
+# candidate_links = index.block('last_name')
+
 
 pdb.set_trace()
+
+
+# if __name__ == "__main__":
+#     main()
