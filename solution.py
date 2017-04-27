@@ -9,24 +9,17 @@ import pdb #byebug for python --> pdb.set_trace()
 df = pd.read_csv('test.csv',escapechar='\\')
 
 df_1 = df[df.source == 'source_1']
-df_2 = df[df.source == 'source_2']
-df_3 = df[df.source == 'source_3']
+df_2 = df[df.source == 'source_3']
+# df_3 = df[df.source == 'source_3']
 
 index = recordlinkage.Pairs(df_1, df_2)
-
 links = index.full()
-
 fill = recordlinkage.Compare(links, df_1, df_2)
 
-pdb.set_trace()
+fill.string('first_name', 'first_name', method='jarowinkler', threshold=0.65)
+fill.string('last_name', 'last_name', method='jarowinkler', threshold=0.65)
 
-
-fill.string('first_name', 'first_name', method='jarowinkler')
-fill.string('last_name', 'last_name', method='jarowinkler')
-
-
-ecm = recordlinkage.ECMClassifier()
-ecm.learn(fill.vectors)
+print(fill.vectors.head())
 
 
 pdb.set_trace()
