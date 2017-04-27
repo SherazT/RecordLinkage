@@ -21,8 +21,8 @@ def find_all_matches(first_df,second_df):
 	result = fill.vectors
 	correct = result[(result[0] == 1) & (result[1] == 1)]
 
-	first_df_index = remove_duplicates(correct.index.labels[0])
-	second_df_index = remove_duplicates(correct.index.labels[1])
+	first_df_index = correct.index.labels[0]
+	second_df_index = correct.index.labels[1]
 
 	return first_df.iloc[first_df_index].append(second_df.iloc[second_df_index])
 	
@@ -31,7 +31,7 @@ def find_all_matches(first_df,second_df):
 
 final = find_all_matches(df_1,df_2).append(find_all_matches(df_1,df_3).append(find_all_matches(df_2,df_3))).drop_duplicates()
 
-final.to_csv('results.csv')
+final.to_csv('results.csv', sep='\t')
 
 # pdb.set_trace()
 
