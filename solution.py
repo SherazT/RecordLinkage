@@ -1,10 +1,11 @@
 import pandas as pd
+import timeit
 import numpy as np
 import jellyfish
 import recordlinkage
 import pdb #byebug for python --> pdb.set_trace()
 
-df = pd.read_csv('test.csv',escapechar='\\')
+df = pd.read_csv('people.csv',escapechar='\\')
 
 df_1 = df[df.source == 'source_1']
 df_2 = df[df.source == 'source_2']
@@ -25,15 +26,11 @@ def find_all_matches(first_df,second_df):
 	second_df_index = correct.index.labels[1]
 
 	return first_df.iloc[first_df_index].append(second_df.iloc[second_df_index])
-	
 
-	
+def spit_out():
+	final = find_all_matches(df_1,df_2).append(find_all_matches(df_1,df_3).append(find_all_matches(df_2,df_3))).drop_duplicates()
+	final.to_csv('results.csv', sep='\t')
 
-final = find_all_matches(df_1,df_2).append(find_all_matches(df_1,df_3).append(find_all_matches(df_2,df_3))).drop_duplicates()
+# print(timeit.timeit(spit_out))
 
-final.to_csv('results.csv', sep='\t')
-
-# pdb.set_trace()
-
-# if __name__ == "__main__":
-#     main()
+spit_out()
