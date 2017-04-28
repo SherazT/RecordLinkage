@@ -18,12 +18,12 @@ def find_all_matches(first_df,second_df):
 
 	fill.string('first_name', 'first_name', method='jaro', threshold=0.70)
 	fill.string('last_name', 'last_name', method='jaro', threshold=0.83)
+	return get_df_from_vector(fill.vectors,first_df,second_df)
 
-	result = fill.vectors
+def get_df_from_vector(result,first_df,second_df):
 	correct = result[(result[0] == 1) & (result[1] == 1)]
 	first_df_index = correct.index.labels[0]
 	second_df_index = correct.index.labels[1]
-
 	return first_df.iloc[first_df_index].append(second_df.iloc[second_df_index])
 
 def spit_out(first_df,second_df,third_df):
@@ -31,6 +31,4 @@ def spit_out(first_df,second_df,third_df):
 	return final_df
 
 final = spit_out(df_1,df_2,df_3)
-pdb.set_trace()
-
 final.to_csv('results.csv', sep='\t')
