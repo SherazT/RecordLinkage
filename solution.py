@@ -5,7 +5,7 @@ import jellyfish
 import recordlinkage
 import pdb #byebug for python --> pdb.set_trace()
 
-df = pd.read_csv('cross.csv',escapechar='\\')
+df = pd.read_csv('test.csv',escapechar='\\')
 
 df_1 = df[df.source == 'source_1']
 df_2 = df[df.source == 'source_2']
@@ -26,10 +26,11 @@ def find_all_matches(first_df,second_df):
 
 	return first_df.iloc[first_df_index].append(second_df.iloc[second_df_index])
 
-def spit_out():
-	final = (find_all_matches(df_1,df_2).append(find_all_matches(df_1,df_3).append(find_all_matches(df_2,df_3)))).drop_duplicates().sort('first_name')
-	final.to_csv('results.csv', sep='\t')
+def spit_out(first_df,second_df,third_df):
+	final_df = (find_all_matches(first_df,second_df).append(find_all_matches(first_df,third_df).append(find_all_matches(second_df,third_df)))).drop_duplicates().sort('first_name')
+	return final_df
 
-# print(timeit.timeit(spit_out))
+final = spit_out(df_1,df_2,df_3)
+pdb.set_trace()
 
-spit_out()
+final.to_csv('results.csv', sep='\t')
