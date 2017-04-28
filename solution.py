@@ -5,13 +5,16 @@ import jellyfish
 import recordlinkage
 import pdb 
 
-df = pd.read_csv('data/test.csv',escapechar='\\')
-df['first_name'] = df['first_name'].str.lower()
-df['last_name'] = df['last_name'].str.lower()
+def import_file(file_loc):
+	df = pd.read_csv(file_loc,escapechar='\\')
+	df['first_name'] = df['first_name'].str.lower()
+	df['last_name'] = df['last_name'].str.lower()
 
-df_1 = df[df.source == 'source_1']
-df_2 = df[df.source == 'source_2']
-df_3 = df[df.source == 'source_3']
+	df_1 = df[df.source == 'source_1']
+	df_2 = df[df.source == 'source_2']
+	df_3 = df[df.source == 'source_3']
+
+	return df_1,df_2,df_3
 
 def find_all_matches(first_df,second_df):
 	index = recordlinkage.Pairs(first_df, second_df)
@@ -37,6 +40,8 @@ def spit_out(first_df,second_df,third_df):
 	second_df,third_df)))).drop_duplicates().sort('first_name')
 
 	return final_df
+
+df_1,df_2,df_3 = import_file('data/sheraz.csv')
 
 final = spit_out(df_1,df_2,df_3)
 final.to_csv('data/results.csv', sep='\t')
