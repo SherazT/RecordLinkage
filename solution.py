@@ -6,6 +6,8 @@ import recordlinkage
 import pdb 
 
 df = pd.read_csv('data/test.csv',escapechar='\\')
+df['first_name'] = df['first_name'].str.lower()
+df['last_name'] = df['last_name'].str.lower()
 
 df_1 = df[df.source == 'source_1']
 df_2 = df[df.source == 'source_2']
@@ -16,7 +18,7 @@ def find_all_matches(first_df,second_df):
 	links = index.full()
 	fill = recordlinkage.Compare(links, first_df, second_df)
 
-	fill.string('first_name', 'first_name', method='jaro', threshold=0.70)
+	fill.string('first_name', 'first_name', method='jaro', threshold=0.72)
 	fill.string('last_name', 'last_name', method='jaro', threshold=0.83)
 
 	return get_df_from_vector(fill.vectors,first_df,second_df)
