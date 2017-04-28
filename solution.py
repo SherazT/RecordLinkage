@@ -32,11 +32,12 @@ def ml_model(comp_vector):
 	train_data = train_input[0][0:5000]
 	train_result = train_input[1][0:5000]
 
-	# intilize classifier
-	reg = recordlinkage.LogisticRegressionClassifier()
-	reg.learn(train_data, train_result)
+	true_linkage = pd.Series(train_data, index=pd.MultiIndex(train_result))
+
+	logrg = recordlinkage.LogisticRegressionClassifier()
+	logrg.learn(compare.vectors[true_linkage.index], true_linkage)
 	
-	return reg.predict(comp_vector)
+	return logrg.predict(comp_vector)
 
 def spit_out():
 	final = (find_all_matches(df_1,df_2).append(find_all_matches(df_1,df_3).append(find_all_matches(df_2,df_3)))).drop_duplicates().sort('first_name')
