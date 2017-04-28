@@ -16,8 +16,8 @@ def find_all_matches(first_df,second_df):
 	links = index.full()
 	fill = recordlinkage.Compare(links, first_df, second_df)
 
-	fill.string('first_name', 'first_name', method='jarowinkler',threshold=0.70)
-	fill.string('last_name', 'last_name', method='jarowinkler', threshold=0.70)
+	fill.string('first_name', 'first_name', method='jaro' threshold=0.72)
+	fill.string('last_name', 'last_name', method='jaro' threshold=0.82)
 
 	result = fill.vectors
 	correct = result[(result[0] == 1) & (result[1] == 1)]
