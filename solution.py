@@ -17,12 +17,14 @@ def import_file(file_loc):
 	return df_1,df_2,df_3
 
 def find_all_matches(first_df,second_df):
-	index = recordlinkage.Pairs(first_df, second_df)
-	links = index.qgram('last_name', 'last_name', 'last_name', threshold=0.40)
-	fill = recordlinkage.Compare(links, first_df, second_df)
+	index = recordlinkage.Pairs(first_df, second_df, chunks=500)
 
-	fill.string('first_name', 'first_name', method='jaro', threshold=0.72)
-	fill.string('last_name', 'last_name', method='jaro', threshold=0.83)
+	for links in index.full():
+
+		fill = recordlinkage.Compare(links, first_df, second_df)
+
+		fill.string('first_name', 'first_name', method='jaro', threshold=0.72)
+		fill.string('last_name', 'last_name', method='jaro', threshold=0.83)
 
 	return get_df_from_vector(fill.vectors,first_df,second_df)
 
