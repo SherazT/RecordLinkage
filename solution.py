@@ -18,7 +18,7 @@ def import_file(file_loc):
 
 def find_all_matches(first_df,second_df):
 	index = recordlinkage.Pairs(first_df, second_df)
-	links = index.full()
+	links = index.qgram('last_name', 'last_name', 'last_name', threshold=0.40)
 	fill = recordlinkage.Compare(links, first_df, second_df)
 
 	fill.string('first_name', 'first_name', method='jaro', threshold=0.72)
