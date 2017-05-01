@@ -46,4 +46,4 @@ def spit_out(first_df,second_df,third_df):
 if __name__ == '__main__':
 	df_1,df_2,df_3 = import_file('data/people.csv')
 	final = spit_out(df_1,df_2,df_3)
-	final.to_csv('data/results_final_applecart.csv', sep=',')
+	final.to_csv('results_final_applecart.csv', sep=',')
