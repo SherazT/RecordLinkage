@@ -43,7 +43,7 @@ def spit_out(first_df,second_df,third_df):
 
 	return final_df
 
-df_1,df_2,df_3 = import_file('data/sheraz.csv')
+df_1,df_2,df_3 = import_file('data/people.csv')
 
 final = spit_out(df_1,df_2,df_3)
-final.to_csv('data/results.csv', sep='\t')
+final.to_csv('data/results.csv', sep=',')
